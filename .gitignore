@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Secrets
+.env
+
+# Logs
+*.log
+
+# Frontend
+finance-ui/node_modules/
+finance-ui/dist/
+finance-ui/.env.local
