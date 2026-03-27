@@ -1,21 +1,7 @@
-# Python
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
-
-# Virtual environments
-.venv
-
-# Secrets
+.venv/
 .env
-
-# Logs
-*.log
-
-# Frontend
-finance-ui/node_modules/
-finance-ui/dist/
-finance-ui/.env.local
+__pycache__/
+*.pyc
+node_modules/
+dist/
+.DS_Store
