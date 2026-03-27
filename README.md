@@ -44,7 +44,8 @@ Built for private equity analysts, venture capital associates, and financial res
 ### Backend
 - **[FastAPI](https://fastapi.tiangolo.com/)** — Async REST API with Server-Sent Events streaming
 - **[CrewAI](https://www.crewai.com/)** — Multi-agent orchestration framework
-- **[Google Gemini 1.5 Flash](https://ai.google.dev/)** — LLM backbone for all agents
+- **[Groq llama-3.1-8b-instant](https://console.groq.com/)** — LLM backbone for data ingestion and quantitative analysis agents
+- **[Google Gemini 2.5 Flash Lite](https://ai.google.dev/)** — LLM backbone for the investment memo synthesis agent
 - **[MCP (Model Context Protocol)](https://modelcontextprotocol.io/)** — Financial data tool server (SEC EDGAR integration)
 - **[Weights & Biases Weave](https://wandb.ai/site/weave)** — LLM observability and trace capture
 - **[uvicorn](https://www.uvicorn.org/)** — ASGI server
@@ -92,6 +93,7 @@ Built for private equity analysts, venture capital associates, and financial res
 - Python 3.13+
 - Node.js 18+
 - [uv](https://github.com/astral-sh/uv) (Python package manager)
+- Groq API key
 - Google Gemini API key
 
 ### 1. Clone the repository
@@ -110,6 +112,7 @@ cp .env.example .env
 Edit `.env` and add your keys:
 
 ```env
+GROQ_API_KEY=your_groq_api_key_here
 GEMINI_API_KEY=your_gemini_api_key_here
 WANDB_API_KEY=your_wandb_api_key_here   # optional, for Weave tracing
 ```
@@ -186,19 +189,23 @@ DealMind/
 
 | Variable | Required | Description |
 |---|---|---|
-| `GEMINI_API_KEY` |  Yes | Google Gemini API key for all LLM calls |
-| `WANDB_API_KEY` |  Optional | Weights & Biases key for Weave trace logging |
+| `GROQ_API_KEY` | Yes | Groq API key for data ingestion and analysis agents (llama-3.1-8b-instant) |
+| `GEMINI_API_KEY` | Yes | Google Gemini API key for the synthesis/memo writer agent (Gemini 2.5 Flash Lite) |
+| `WANDB_API_KEY` | Optional | Weights & Biases key for Weave trace logging |
 
 ---
 
 ## Rate Limits
 
-DealMind uses **Google Gemini 1.5 Flash**. Free tier limits apply:
+DealMind uses two LLM providers:
 
-- **15 requests/minute** on the free tier
+**Groq (llama-3.1-8b-instant)** — used by the data ingestion and analysis agents:
+- Free tier: **30 requests/minute**, generous token limits
+- `max_rpm=30` is set at the agent level to stay within limits
+
+**Google Gemini (Gemini 2.5 Flash Lite)** — used by the synthesis/memo writer agent:
+- Free tier limits apply; upgrade to a paid plan to remove constraints
 - The backend automatically retries with a 60-second backoff on `429` errors
-- `max_rpm=10` is set at the Crew level to stay safely within limits
-- Upgrade to a paid Gemini API plan to remove rate limit constraints
 
 ---
 
