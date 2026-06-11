@@ -1,3 +1,7 @@
+<img width="1468" height="839" alt="Screenshot 2026-06-11 at 12 55 38 PM" src="https://github.com/user-attachments/assets/cc1b4423-027f-4093-9430-a68c75d118db" />
+
+
+
 # DealMind
 
 > **Autonomous multi-agent financial due diligence, powered by AI.**
